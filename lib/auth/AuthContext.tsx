@@ -92,7 +92,7 @@ export const AuthProvider: FunctionComponent = ({
             setUser(user)
             setUserLoading(false)
             setLoggedin(true)
-            Router.push(ROUTE_HOME)
+            //Router.push(ROUTE_HOME)
         }
 
         const { data: authListener } = supabase.auth.onAuthStateChange(
