@@ -14,6 +14,9 @@ import CardData from "../components/Card/CardData";
 import CardLikeComment from "../components/Card/CardLikeComment";
 import FourItemCard from "../components/Card/FourItemCard";
 
+import Comment from "../pages/product/[id]";
+
+
 // define the shape of the SignUp form's fields
 type SignUpFieldProps = {
     email: string,
@@ -75,12 +78,33 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
                                     justify-items-center gap-4
                                     ">
                         <FourItemCard
-                            title="Card Title"
+
+                            title="T-Shirts"
+                            Item1="T-Shirt"
+                            Item1Image="/Products/WhiteClock.png"
+                            Item2="T-Shirt"
+                            Item2Image="/Products/WhiteClock.png"
+                            Item3="T-Shirt"
+                            Item3Image="/Products/WhiteClock.png"
+                            Item4="T-Shirt"
+                            Item4Image="/Products/WhiteClock.png"
                             description="Card description"
-                            image="components/Slidebar/Screenshot(1082).png"
+                        />
+                        <FourItemCard
+                            title="Shop by Category"
+                            Item1="T-Shirt"
+                            Item1Image="/Products/WhiteClock.png"
+                            Item2="Jeans"
+                            Item2Image="/Products/WhiteClock.png"
+                            Item3="Socks"
+                            Item3Image="/Products/WhiteClock.png"
+                            Item4="Jackets"
+                            Item4Image="/Products/WhiteClock.png"
+                            description="Card description"
                         />
                         <Card
-                            title="Card Title"
+                            title="Men-White-Watch"
+
                             description="Card description"
                             image="components/Slidebar/Screenshot(1082).png"
                         />
