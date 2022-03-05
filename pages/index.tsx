@@ -9,6 +9,10 @@ import Navbar from '../components/Navbar'
 import Example from './test'
 import Image from 'next/image'
 import Carousel from "../components/Carousel/Carousel";
+import Card from "../components/Card/card";
+import CardData from "../components/Card/CardData";
+import CardLikeComment from "../components/Card/CardLikeComment";
+import FourItemCard from "../components/Card/FourItemCard";
 
 // define the shape of the SignUp form's fields
 type SignUpFieldProps = {
@@ -57,8 +61,95 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
                 // fill,fixed,intrinsic,responsive,undefined.
                 */}
 
+
                 <Carousel playTime={3000}/>
 
+
+                <section className="container mx-auto px-0 md:px-4 py-4">
+                    <div
+                        className="grid
+                                    grid-cols-1
+                                    md:grid-cols-2
+                                    lg:grid-cols-3
+                                    2xl:grid-cols-4
+                                    justify-items-center gap-4
+                                    ">
+                        <FourItemCard
+                            title="Card Title"
+                            description="Card description"
+                            image="components/Slidebar/Screenshot(1082).png"
+                        />
+                        <Card
+                            title="Card Title"
+                            description="Card description"
+                            image="components/Slidebar/Screenshot(1082).png"
+                        />
+                        <Card
+                            title="Card Title"
+                            description="Card description"
+                            image="components/Slidebar/Screenshot(1082).png"
+                        />
+                        <Card
+                            title="Card Title"
+                            description="Card description"
+                            image="components/Slidebar/Screenshot(1082).png"
+                        />
+                    </div>
+                </section>
+
+
+                {/* <div className="flex flex-wrap">
+                    <div className="flex-1"><Card
+                        title="Card Title"
+                        description="Card description"
+                        image="components/Slidebar/Screenshot(1082).png"
+                    /></div>
+                    <div className="flex-1"><Card
+                        title="Card Title"
+                        description="Card description"
+                        image="components/Slidebar/Screenshot(1082).png"
+                    /></div>
+                    <div className="flex-1"><Card
+                        title="Card Title"
+                        description="Card description"
+                        image="components/Slidebar/Screenshot(1082).png"
+                    /></div>
+                    <div><Card
+                        title="Card Title"
+                        description="Card description"
+                        image="components/Slidebar/Screenshot(1082).png"
+                    /></div>
+                </div>
+
+
+                <div className="p-5 sm:justify-center sm:pt-9 sm:flex-row text-justify relative">
+                    <div className="border-solid border-2 border-black basis-[13%] sm:mr-10 min-w-1/5 rounded-lg ">
+                        <Image
+                            src="/Products/WhiteClock.png"
+                            alt="Profile"
+                            width={600}
+                            height={400}
+                            layout="responsive"
+                            objectFit="cover"
+                            className="rounded-lg"
+                        />
+                    </div>
+                </div>
+
+
+                <section className="container mx-auto px-0 md:px-4 py-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-4">
+                        {CardData.map((element, index) => (
+                            <CardLikeComment
+                                key={index}
+                                title={element.title}
+                                likes={element.likes}
+                                order={index + 1}
+                                image={element.image}
+                            />
+                        ))}
+                    </div>
+                </section>*/}
 
             </Layout>
         </div>
