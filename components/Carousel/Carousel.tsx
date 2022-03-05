@@ -2,6 +2,9 @@ import React, {Component} from "react";
 import {CarouselData} from "./CarouselData";
 import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai";
 import Swipe from "react-easy-swipe";
+import PropTypes from "prop-types";
+
+// TODO: https://stackoverflow.com/questions/68025173/how-to-change-image-on-hover-with-nextjs-and-tailwindcss
 
 class Carousel extends Component {
     constructor(props) {
@@ -9,8 +12,17 @@ class Carousel extends Component {
         this.state = {
             currentSlide: 0,
             paused: false,
+            playTime: this.props.playTime,
         };
     }
+
+    static propTypes = {
+        playTime: PropTypes.number,
+    };
+
+    static defaultProps = {
+        playTime: 5000,
+    };
 
     componentDidMount() {
         setInterval(() => {
@@ -21,7 +33,7 @@ class Carousel extends Component {
                         : this.state.currentSlide + 1;
                 this.setState({currentSlide: newSlide});
             }
-        }, 3000);
+        }, this.state.playTime);
     }
 
     nextSlide = () => {
@@ -46,8 +58,8 @@ class Carousel extends Component {
 
     render() {
         return (
-            <div className="mt-8">
-                <div className="max-w-lg h-72 flex overflow-hidden relative">
+            <div>
+                <div className="w-auto lg:h-[32rem] lg:max-h-screen md:h-96 sm:h-full flex overflow-hidden relative">
                     <AiOutlineLeft
                         onClick={this.prevSlide}
                         className="absolute left-0 text-3xl inset-y-1/2 text-white cursor-pointer"
@@ -56,22 +68,25 @@ class Carousel extends Component {
                     <Swipe onSwipeLeft={this.nextSlide} onSwipeRight={this.prevSlide}>
                         {CarouselData.map((slide, index) => {
                             return (
-                                <img
-                                    src={slide.image}
-                                    alt="This is a carousel slide"
-                                    key={index}
-                                    className={
-                                        index === this.state.currentSlide
-                                            ? "block w-full h-auto object-cover"
-                                            : "hidden"
-                                    }
-                                    onMouseEnter={() => {
-                                        this.setState({paused: true});
-                                    }}
-                                    onMouseLeave={() => {
-                                        this.setState({paused: false});
-                                    }}
-                                />
+                                <a href={slide.url}>
+
+                                    <img
+                                        src={slide.image}
+                                        alt="This is a carousel slide"
+                                        key={index}
+                                        className={
+                                            index === this.state.currentSlide
+                                                ? "block w-full h-auto object-cover"
+                                                : "hidden"
+                                        }
+                                        onMouseEnter={() => {
+                                            this.setState({paused: true});
+                                        }}
+                                        onMouseLeave={() => {
+                                            this.setState({paused: false});
+                                        }}
+                                    />
+                                </a>
                             );
                         })}
                     </Swipe>
@@ -103,5 +118,6 @@ class Carousel extends Component {
         );
     }
 }
+
 
 export default Carousel;

@@ -7,9 +7,8 @@ import {useAuth} from '../lib/auth'
 import {useFormFields} from '../lib/utils'
 import Navbar from '../components/Navbar'
 import Example from './test'
-import Slider from "../components/Slidebar";
 import Image from 'next/image'
-import Carousel from "../components/Carousel";
+import Carousel from "../components/Carousel/Carousel";
 
 // define the shape of the SignUp form's fields
 type SignUpFieldProps = {
@@ -58,8 +57,7 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
                 // fill,fixed,intrinsic,responsive,undefined.
                 */}
 
-
-                <Carousel/>
+                <Carousel playTime={3000}/>
 
 
             </Layout>
@@ -69,9 +67,8 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
 
 export default IndexPage
 
-IndexPage.defaultProps =
-    {
-        meta: {
-            title: 'Ecom'
-        }
+IndexPage.defaultProps = {
+    meta: {
+        title: 'Ecom'
     }
+}
