@@ -138,9 +138,9 @@ function AuthShow({user, children}) {
 
 export default function Example() {
     const [open, setOpen] = useState(false)
-    const {loading, signIn, signUp, user, signInWithGithub} = useAuth()
+    const {loading, signIn, signUp, users, signInWithGithub} = useAuth()
 
-    console.log("User ", user)
+    console.log("User ", users)
     console.log("Loading ", loading)
 
 
@@ -480,7 +480,7 @@ export default function Example() {
                                         </a>}
                                     </div>*/}
 
-                                    <AuthShow user={user}>
+                                    <AuthShow user={users}>
                                         <a href={ROUTE_AUTH}
                                            className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                             Sign in

@@ -7,7 +7,7 @@ import {FaUser} from 'react-icons/fa'
 
 export default function Navbar() {
     const [isSignIn, setIsSignIn] = useState(true)
-    const { loading, signIn, signUp, user, signInWithGithub } = useAuth()
+    const { loading, signIn, signUp, users, signInWithGithub } = useAuth()
     const [showSearch, setShowSearch] = useState(false)
 
     useEffect(() => {
@@ -66,7 +66,7 @@ export default function Navbar() {
                             {isSignIn ? (
                                 <span className='flex gap-2 items-center px-3 relative'>
                   <FaUser/>
-                                    {user?.name}
+                                    {users?.name}
                                     <Link href={`/api/auth/signout`}>
                     <a
                         onClick={(e) => {

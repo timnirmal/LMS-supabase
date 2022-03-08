@@ -8,17 +8,19 @@ import {ROUTE_AUTH} from '../config'
 import {GetServerSideProps, InferGetServerSidePropsType} from 'next'
 import {supabase} from '../lib/supabase'
 import {NextAppPageServerSideProps} from '../types/app'
+import AuthModal from '../components/Modals/AuthModal'
 
-const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+//const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Cart = () => {
     const {
-        user,       // Logged in user object
+        users,       // Logged in user object
         loading,    // Loading state
         signOut,    // Sign out method
         loggedIn,
         userLoading
     } = useAuth()
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (!userLoading && !loggedIn) {
             Router.push(ROUTE_AUTH)
         }
@@ -26,20 +28,24 @@ const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     if (userLoading) {
         return <SpinnerFullPage/>
-    }
+    }*/
 
     return (
-        <Layout useBackdrop={false}>
-            <div className="h-screen flex flex-col justify-center items-center relative">
-                <h2 className="text-3xl my-4">Howdie, {user && user.email ? user.email : 'Explorer'}!</h2>
-                {!user &&
-                    <small>You aren't signed in yet. Please Sign In to continue </small>}
-                {user && <div>
-                    <button onClick={signOut}
-                            className="border bg-gray-500 border-gray-600 text-white px-3 py-2 rounded w-full text-center transition duration-150 shadow-lg">Sign
-                        Out
-                    </button>
-                </div>}
+        <Layout useBackdrop={false} usePadding={false}>
+            <div>
+                <div className="h-screen flex flex-col justify-center items-center relative">
+                    <h2 className="text-3xl my-4">Howdie, {users && users.email ? users.email : 'Explorer'}!</h2>
+                    {!users &&
+                        <AuthModal/>
+                        //<small>You aren't signed in yet. Please Sign In to continue </small>
+                    }
+                    {users && <div>
+                        <button onClick={signOut}
+                                className="border bg-gray-500 border-gray-600 text-white px-3 py-2 rounded w-full text-center transition duration-150 shadow-lg">Sign
+                            Out
+                        </button>
+                    </div>}
+                </div>
             </div>
         </Layout>
     )

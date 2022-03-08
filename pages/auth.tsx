@@ -20,7 +20,7 @@ const FORM_VALUES: SignUpFieldProps = {
 
 const IndexPage: NextPage<NextAppPageProps> = ({}) => {
     const [isSignIn, setIsSignIn] = useState(true)
-    const {loading, signIn, signUp, user, signInWithGithub} = useAuth()
+    const {loading, signIn, signUp, users, signInWithGithub} = useAuth()
     // Now since we have our form ready, what we're going to need for signing up our users
     // 1. let users provide email and password
     const [values, handleChange] = useFormFields<SignUpFieldProps>(FORM_VALUES)

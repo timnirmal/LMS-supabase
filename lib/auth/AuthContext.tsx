@@ -12,7 +12,7 @@ export type AuthContextProps = {
     signIn: (payload: SupabaseAuthPayload) => void,
     signInWithGithub: () => void,
     loading: boolean
-    user: User,
+    users: User,
     signOut: () => void,
     loggedIn: boolean,
     userLoading: boolean
@@ -104,7 +104,14 @@ export const AuthProvider: FunctionComponent = ({
                 if (user) {
                     setUser(user)
                     setLoggedin(true)
-                    Router.push(ROUTE_HOME)
+                    let route = Router.query.from
+                    if (route === ROUTE_AUTH) {
+                        Router.push(ROUTE_HOME)
+                    }
+                    else {
+                        Router.push(route)
+                    }
+                    //Router.push(ROUTE_HOME)
                 } else {
                     setUser(null)
                     Router.push(ROUTE_AUTH)
@@ -118,7 +125,7 @@ export const AuthProvider: FunctionComponent = ({
     }, [])
 
     return (<AuthContext.Provider value={{
-            user,
+            users: user,
             signUp,
             signIn,
             signInWithGithub,
