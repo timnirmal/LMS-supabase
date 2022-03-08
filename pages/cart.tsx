@@ -8,10 +8,9 @@ import {ROUTE_AUTH} from '../config'
 import {GetServerSideProps, InferGetServerSidePropsType} from 'next'
 import {supabase} from '../lib/supabase'
 import {NextAppPageServerSideProps} from '../types/app'
-import AuthModal from '../components/Modals/AuthModal'
 
-//const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-const Cart = () => {
+
+const ProfilePage = ({user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const {
         users,       // Logged in user object
         loading,    // Loading state
@@ -20,7 +19,7 @@ const Cart = () => {
         userLoading
     } = useAuth()
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (!userLoading && !loggedIn) {
             Router.push(ROUTE_AUTH)
         }
@@ -28,45 +27,43 @@ const Cart = () => {
 
     if (userLoading) {
         return <SpinnerFullPage/>
-    }*/
+    }
 
     return (
-        <Layout useBackdrop={false} usePadding={false}>
-            <div>
-                <div className="h-screen flex flex-col justify-center items-center relative">
-                    <h2 className="text-3xl my-4">Howdie, {users && users.email ? users.email : 'Explorer'}!</h2>
-                    {!users &&
-                        <AuthModal/>
-                        //<small>You aren't signed in yet. Please Sign In to continue </small>
-                    }
-                    {users && <div>
-                        <button onClick={signOut}
-                                className="border bg-gray-500 border-gray-600 text-white px-3 py-2 rounded w-full text-center transition duration-150 shadow-lg">Sign
-                            Out
-                        </button>
-                    </div>}
-                </div>
+        <Layout useBackdrop={false}>
+            <div className="h-screen flex flex-col justify-center items-center relative">
+                <h2 className="text-3xl my-4">Howdie, {users && users.email ? users.email : 'Explorer'}!</h2>
+                {!users &&
+                    <small>You've landed on a protected page. Please <Link href="/">log in</Link> to view the page's
+                        full content </small>}
+                {users && <div>
+                    <button onClick={signOut}
+                            className="border bg-gray-500 border-gray-600 text-white px-3 py-2 rounded w-full text-center transition duration-150 shadow-lg">Sign
+                        Out
+                    </button>
+                </div>}
             </div>
         </Layout>
     )
 }
 
-export default Cart
+export default ProfilePage
 
 // Fetch user data server-side to eliminate a flash of unauthenticated content.
 
-export const getServerSideProps: GetServerSideProps = async ({req}): Promise<NextAppPageServerSideProps> => {
-    const {user} = await supabase.auth.api.getUserByCookie(req)
+export const getServerSideProps: GetServerSideProps = async (context): Promise<NextAppPageServerSideProps> => {
+    const {user} = await supabase.auth.api.getUserByCookie(context.req)
+    console.log("req", context.req);
+    console.log("context", context);
+    //let routeString = encodeURIComponent("cart")
     // We can do a re-direction from the server
     if (!user) {
         return {
-            // redirect: {
-            //     destination: '/cart',
-            //     permanent: false,
-            // },
-            props: {
-                userLoading: false
-            }
+            redirect: {
+                //destination: '/auth?from='+encodeURIComponent("cart 12"),
+                destination: '/auth?from=cart',
+                permanent: false,
+            },
         }
     }
     // or, alternatively, can send the same values that client-side context populates to check on the client and redirect

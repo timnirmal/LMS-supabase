@@ -4,7 +4,7 @@ import Router from 'next/router'
 import {supabase} from '../supabase'
 import {useMessage} from '../message'
 import {SupabaseAuthPayload} from './auth.types'
-import { ROUTE_HOME, ROUTE_AUTH } from '../../config'
+import {ROUTE_HOME, ROUTE_AUTH, ROUTE_PROFILE} from '../../config'
 
 
 export type AuthContextProps = {
@@ -105,7 +105,9 @@ export const AuthProvider: FunctionComponent = ({
                     setUser(user)
                     setLoggedin(true)
                     let route = Router.query.from
-                    if (route === ROUTE_AUTH) {
+                    console.log('route', route)
+                    // remove first character of route
+                    if (route === ROUTE_PROFILE.substring(1)) {
                         Router.push(ROUTE_HOME)
                     }
                     else {
