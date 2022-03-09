@@ -8,9 +8,10 @@ import {ROUTE_AUTH} from '../config'
 import {GetServerSideProps, InferGetServerSidePropsType} from 'next'
 import {supabase} from '../lib/supabase'
 import {NextAppPageServerSideProps} from '../types/app'
+import CartCard from '../components/Card/Cart'
 
 
-const ProfilePage = ({user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const {
         users,       // Logged in user object
         loading,    // Loading state
@@ -29,38 +30,95 @@ const ProfilePage = ({user}: InferGetServerSidePropsType<typeof getServerSidePro
         return <SpinnerFullPage/>
     }
 
+    // TODO: Get Cart Data from the database
+    let cartData = {
+        items: [
+            {
+                id: 1,
+                name: 'Item 1',
+                price: 10,
+                quantity: 1,
+                image: 'https://picsum.photos/200/300',
+            },
+            {
+                id: 2,
+                name: 'Item 2',
+                price: 20,
+                quantity: 2
+            },
+            {
+                id: 3,
+                name: 'Item 3',
+                price: 30,
+                quantity: 3
+            }
+        ],
+        total: 60
+    }
+
     return (
-        <Layout useBackdrop={false}>
-            <div className="h-screen flex flex-col justify-center items-center relative">
-                <h2 className="text-3xl my-4">Howdie, {users && users.email ? users.email : 'Explorer'}!</h2>
-                {!users &&
-                    <small>You've landed on a protected page. Please <Link href="/">log in</Link> to view the page's
-                        full content </small>}
-                {users && <div>
-                    <button onClick={signOut}
-                            className="border bg-gray-500 border-gray-600 text-white px-3 py-2 rounded w-full text-center transition duration-150 shadow-lg">Sign
-                        Out
-                    </button>
-                </div>}
+        <Layout useBackdrop={false} usePadding={true}>
+            <div className="flex flex-row justify-center items-center relative">
+                {/* Cart */}
+                <div className="flex flex-row basis-3/4">
+
+                    <div className="flex flex-col items-center">
+
+                        <h1 className="text-3xl font-bold text-center mt-6">Cart</h1>
+
+                        <div className="flex flex-col items-center">
+                            {cartData.items.map((item) => (
+                                <CartCard key={item.id} item={item}/>
+                            ))}
+                        </div>
+
+                        <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center">
+                                <h2 className="text-2xl font-bold text-center">Total: ${cartData.total}</h2>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <Link href="/checkout">
+                                    <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        Checkout
+                                    </a>
+                                </Link>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div className="flex flex-row basis-1/4 justify-center items-center">
+                    Checkout
+                </div>
+
+                <div className="absolute bottom-0 right-0 mb-4 mr-4">
+                    <Link href="/">
+                        <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Continue Shopping
+                        </a>
+                    </Link>
+                </div>
+
             </div>
+
+
         </Layout>
     )
 }
 
-export default ProfilePage
+export default Cart
 
 // Fetch user data server-side to eliminate a flash of unauthenticated content.
 
-export const getServerSideProps: GetServerSideProps = async (context): Promise<NextAppPageServerSideProps> => {
-    const {user} = await supabase.auth.api.getUserByCookie(context.req)
-    console.log("req", context.req);
-    console.log("context", context);
-    //let routeString = encodeURIComponent("cart")
-    // We can do a re-direction from the server
+export const getServerSideProps: GetServerSideProps = async ({req}): Promise<NextAppPageServerSideProps> => {
+    const {user} = await supabase.auth.api.getUserByCookie(req)
+
     if (!user) {
         return {
             redirect: {
-                //destination: '/auth?from='+encodeURIComponent("cart 12"),
                 destination: '/auth?from=cart',
                 permanent: false,
             },
