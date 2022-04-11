@@ -39,18 +39,23 @@ const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
                 price: 10,
                 quantity: 1,
                 image: 'https://picsum.photos/200/300',
+                stock: 10
             },
             {
                 id: 2,
                 name: 'Item 2',
                 price: 20,
-                quantity: 2
+                quantity: 2,
+                image: 'https://picsum.photos/200/300',
+                stock: 0
             },
             {
                 id: 3,
                 name: 'Item 3',
                 price: 30,
-                quantity: 3
+                quantity: 3,
+                image: 'https://picsum.photos/200/300',
+                stock: 10
             }
         ],
         total: 60
@@ -60,19 +65,19 @@ const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
         <Layout useBackdrop={false} usePadding={true}>
             <div className="flex flex-row justify-center items-center relative">
                 {/* Cart */}
-                <div className="flex flex-row basis-3/4">
+                <div className="flex flex-row basis-3/4 border border-blue-500">
 
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col  flex-grow items-center">
 
                         <h1 className="text-3xl font-bold text-center mt-6">Cart</h1>
 
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col flex-1 items-center">
                             {cartData.items.map((item) => (
-                                <CartCard key={item.id} item={item}/>
+                                <CartCard key={item.id} item={item} className="flex-grow"/>
                             ))}
                         </div>
 
-                        <div className="flex flex-col items-center">
+                        {/*<div className="flex flex-col items-center">
                             <div className="flex flex-col items-center">
                                 <h2 className="text-2xl font-bold text-center">Total: ${cartData.total}</h2>
                             </div>
@@ -83,14 +88,14 @@ const Cart = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
                                     </a>
                                 </Link>
                             </div>
-                        </div>
+                        </div>*/}
 
                     </div>
 
                 </div>
 
 
-                <div className="flex flex-row basis-1/4 justify-center items-center">
+                <div className="flex flex-row basis-1/4 justify-center items-center border border-blue-500 ">
                     Checkout
                 </div>
 

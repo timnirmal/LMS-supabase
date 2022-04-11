@@ -12,8 +12,6 @@ import {NextAppPageServerSideProps} from '../types/app'
 
 const ProfilePage = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     console.log('ProfilePage')
-    console.log(getServerSideProps)
-    console.log("User : " ,user)
 
     const {
         users,       // Logged in user object

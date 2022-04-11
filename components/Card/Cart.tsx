@@ -17,7 +17,7 @@ export default function CartCard({children, className, ...props}) {
                 className="flex flex-col md:flex-row bg-white rounded-2xl border border-gray-200 shadow-md m-3"
             >
 
-                <div className="flex items-center md:flex-none h-72 w-full md:w-1/2 lg:2/5 p-3 relative">
+                <div className="flex items-center md:flex-none h-72 w-full md:w-1/2 lg:w-2/5 p-3 relative">
                     <img src={"/Products/WhiteClock.png"} className="inset-0 object-cover w-full h-full rounded-2xl"
                          alt=""/>
                 </div>
@@ -30,7 +30,10 @@ export default function CartCard({children, className, ...props}) {
                             ${props.item.price}
                         </div>
                         <div className="text-xs leading-6 font-medium uppercase text-slate-500">
-                            In stock
+                            {props.item.stock?
+                                <span className="text-green-500"> In Stock </span>:
+                                <span className="text-red-500"> Out of Stock</span>
+                            }
                         </div>
                     </div>
                     <div className="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">

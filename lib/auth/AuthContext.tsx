@@ -107,11 +107,16 @@ export const AuthProvider: FunctionComponent = ({
                     let route = Router.query.from
                     console.log('route', route)
                     // remove first character of route
-                    if (route === ROUTE_PROFILE.substring(1)) {
-                        Router.push(ROUTE_HOME)
+                    if (route) {
+                        if (route === ROUTE_PROFILE.substring(1)) {
+                            Router.push(ROUTE_HOME)
+                        }
+                        else {
+                            Router.push(route)
+                        }
                     }
                     else {
-                        Router.push(route)
+                        Router.push(ROUTE_HOME)
                     }
                     //Router.push(ROUTE_HOME)
                 } else {
