@@ -1,0 +1,22 @@
+create table Emp (
+  id text not null,
+  username text unique,
+  role text,
+  avatarUrl text,
+  joinedAt timestamp with time zone default timezone('utc'::text, now()) not null,
+  primary key (id),
+  unique(username)
+);
+
+
+begin;
+  drop publication if exists supabase_realtime;
+  create publication supabase_realtime;
+commit;
+alter publication supabase_realtime add table Emp;
+
+
+insert into public.Emp (id, username, role)
+values
+('ad-1234', 'timnirmal', 'admin'),
+('work-1234', 'supabot', 'worker');

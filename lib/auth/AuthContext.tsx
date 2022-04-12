@@ -1,7 +1,7 @@
 import {createContext, FunctionComponent, useState, useEffect} from 'react'
 import { User, Session, AuthChangeEvent } from '@supabase/supabase-js'
 import Router from 'next/router'
-import {supabase} from '../supabase'
+import {supabaseClient} from '../supabase'
 import {useMessage} from '../message'
 import {SupabaseAuthPayload} from './auth.types'
 import {ROUTE_HOME, ROUTE_AUTH, ROUTE_PROFILE} from '../../config'
@@ -32,32 +32,70 @@ export const AuthProvider: FunctionComponent = ({
     const signUp = async (payload: SupabaseAuthPayload) => {
         try {
             setLoading(true)
-            const {error} = await supabase.auth.signUp(payload)
+            const {error} = await supabaseClient.auth.signUp(payload)
             if (error) {
+                console.error(error, "error 1")
                 if (handleMessage) {
                     handleMessage({message: error.message, type: 'error'})
                 }
             } else {
+                await insertProfile(user, payload)
+                console.error(error, "error 3")
                 handleMessage({
                     message: 'Signup successful. Please check your inbox for a confirmation email!',
                     type: 'success'
                 })
             }
         } catch (error) {
+            console.error(error, "error 2")
             handleMessage({message: error.error_description || error, type: 'error'})
         } finally {
             setLoading(false)
         }
     }
 
+    const insertProfile = async (user: User | null, payload) => {
+        console.log('insertProfile User', user)
+        console.log('insertProfile Pyaload', payload)
+        try {
+            const { data, error } = await supabaseClient
+                .from('profiles')
+                .insert([
+                    { id: user.id, email: user.email, password: payload.password }
+                ],{ upsert: true })
+
+            if (error) {
+                if (handleMessage) {
+                    handleMessage({message: error.message, type: 'error'})
+                }
+            } else {
+                handleMessage({
+                    message: 'Profile created successfully!',
+                    type: 'success'
+                })
+            }
+        } catch (error) {
+            handleMessage({message: error.error_description || error, type: 'error'})
+        }
+    }
+
     const signIn = async (payload: SupabaseAuthPayload) => {
+        console.log('signin', payload)
         try {
             setLoading(true)
-            const { error, user } = await supabase.auth.signIn(payload)
+            const { error, user } = await supabaseClient.auth.signIn(payload)
             if (error) {
                 handleMessage({message: error.message, type: 'error'})
             } else {
                 handleMessage({ message: `Welcome, ${user.email}`, type: 'success' })
+
+                // Now we need to Update Profile Table
+                console.log(user)
+                await insertProfile(user, payload)
+
+
+
+
             }
         } catch (error) {
             handleMessage({message: error.error_description || error, type: 'error'})
@@ -68,12 +106,12 @@ export const AuthProvider: FunctionComponent = ({
 
     const signInWithGithub = async (evt) => {
         evt.preventDefault()
-        await supabase.auth.signIn({ provider: 'github'}
+        await supabaseClient.auth.signIn({ provider: 'github'}
             /*, { redirectTo: 'http://localhost:3000/test' }*/
         )
     }
 
-    const signOut = async () => await supabase.auth.signOut()
+    const signOut = async () => await supabaseClient.auth.signOut()
 
     const setServerSession = async (event: AuthChangeEvent, session: Session) => {
         await fetch('/api/auth', {
@@ -86,7 +124,7 @@ export const AuthProvider: FunctionComponent = ({
 
 
     useEffect(() => {
-        const user = supabase.auth.user()
+        const user = supabaseClient.auth.user()
 
         if (user) {
             setUser(user)
@@ -95,7 +133,7 @@ export const AuthProvider: FunctionComponent = ({
             //Router.push(ROUTE_HOME)
         }
 
-        const { data: authListener } = supabase.auth.onAuthStateChange(
+        const { data: authListener } = supabaseClient.auth.onAuthStateChange(
             async (event, session) => {
                 console.log('authListener', event, session)
                 const user = session?.user! ?? null

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse} from 'next'
-import { supabase } from '../../lib/supabase'
+import { supabaseClient } from '../../lib/supabase'
 
 export default function handler(req: NextApiRequest , res: NextApiResponse) {
-    supabase.auth.api.setAuthCookie(req, res)
+    supabaseClient.auth.api.setAuthCookie(req, res)
 }

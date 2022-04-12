@@ -6,7 +6,7 @@ import {useEffect} from 'react'
 import Router from 'next/router'
 import {ROUTE_AUTH} from '../config'
 import {GetServerSideProps, InferGetServerSidePropsType} from 'next'
-import {supabase} from '../lib/supabase'
+import {supabaseClient} from '../lib/supabase'
 import {NextAppPageServerSideProps} from '../types/app'
 
 
@@ -43,7 +43,7 @@ export default Cart
 // Fetch user data server-side to eliminate a flash of unauthenticated content.
 
 export const getServerSideProps: GetServerSideProps = async ({req}): Promise<NextAppPageServerSideProps> => {
-    const {user} = await supabase.auth.api.getUserByCookie(req)
+    const {user} = await supabaseClient.auth.api.getUserByCookie(req)
 
     if (!user) {
         return {
