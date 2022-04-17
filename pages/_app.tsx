@@ -1,6 +1,8 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'tailwindcss/tailwind.css'
 import '../styles/globals.css'
+import 'codemirror/lib/codemirror.css'
+
 
 import React from 'react'
 import type, {AppProps} from 'next/app'
