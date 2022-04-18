@@ -34,7 +34,7 @@ export default function Blog({
       <Layout useBackdrop={false} usePadding={true}>
       <PageSEO title={`Blog - ${siteMetadata.author}`} description={siteMetadata.description} />
       <ListLayout
-        posts={posts}
+        posts={String(posts)}
         //initialDisplayPosts={initialDisplayPosts}
         pagination={pagination}
         title="All Posts"
