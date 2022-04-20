@@ -3,6 +3,9 @@ import SimpleMDEditor from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import axios from 'axios'
 import Layout from "../components/Layout";
+import {GetServerSideProps} from "next";
+import {NextAppPageServerSideProps} from "../types/app";
+import {supabaseClient} from "../lib/supabase";
 
 type ImageUploadType = {
   (image: File,
@@ -10,7 +13,10 @@ type ImageUploadType = {
    onError: (errorMessage: string) => void): void
 }
 
-const Editor = () => {
+const Editor = (props) => {
+
+  console.log(props.user)
+
   const [value, setValue] = useState("");
 
   const onChange = (value: string) => {
@@ -72,6 +78,16 @@ const Editor = () => {
     };
   }, []);
 
+  const onClickFunc = async () => {
+    console.log(JSON.stringify(value))
+
+    const {data, error} = await supabaseClient
+        .from('posts')
+        .insert([
+          {user_id: props.user.id, user_email: props.user.email, content: JSON.stringify(value), title: 'test2', tags: ['test', 'test2']}
+        ])
+  }
+
 
   return (
       <Layout useBackdrop={false} usePadding={true}>
@@ -81,9 +97,7 @@ const Editor = () => {
             onChange={onChange}
             options={newOptions}
         />
-        <button onClick={() => {
-          console.log(JSON.stringify(value))
-        }}>
+        <button onClick={() => { onClickFunc() }}>
           Create Post
         </button>
       </Layout>

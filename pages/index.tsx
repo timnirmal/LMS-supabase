@@ -38,6 +38,9 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
                 if (!error) {
                     setPosts(data);
                 }
+                else {
+                    console.log(error)
+                }
             });
         console.log(posts);
     },[]);
@@ -66,6 +69,8 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
                             description="Card description"
                             image="/Products/WhiteClock.png"
                         />
+
+
 
                     </div>
                 </section>

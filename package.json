@@ -14,7 +14,11 @@
     "validate": "npm-run-all --parallel type-check format-check lint build"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.1.0",
+    "@cloudinary/url-gen": "^1.7.0",
     "@fortawesome/fontawesome-free": "^6.1.1",
+    "@mdx-js/runtime": "^1.6.22",
+    "@next/mdx": "^12.0.8",
     "@popperjs/core": "^2.11.5",
     "@reach/alert": "^0.16.0",
     "add": "^2.0.6",
@@ -36,10 +40,22 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.3.0",
     "react-simplemde-editor": "^5.0.2",
+    "rehype-sanitize": "^5.0.1",
+    "rehype-stringify": "^9.0.3",
+    "remark-html": "^15.0.1",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
     "styled-components": "^5.3.3",
+    "unified": "^10.1.2",
     "yarn": "^1.22.10",
-    "@cloudinary/react": "^1.1.0",
-    "@cloudinary/url-gen": "^1.7.0"
+
+    "@emotion/react": "^11.7.1",
+    "@mdx-js/loader": "^1.6.22",
+    "disqus-react": "^1.1.2",
+    "gray-matter": "^4.0.2",
+    "prism-react-renderer": "^1.1.1",
+    "react-ga": "^3.3.0",
+    "theme-ui": "^0.13.1"
   },
   "devDependencies": {
     "@headlessui/react": "^1.5.0",
@@ -73,7 +89,9 @@
     "postcss": "^8.4.7",
     "prettier": "^2.2.1",
     "tailwindcss": "^3.0.23",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.2",
+
+    "onchange": "^7.1.0"
   },
   "husky": {
     "hooks": {
