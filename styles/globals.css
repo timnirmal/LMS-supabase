@@ -13,14 +13,14 @@
   h3 {
     @apply text-lg;
   }
-  a {
+  /*a {
     color: -webkit-link;
     cursor: pointer;
     text-decoration-line: underline;
     text-decoration-thickness: initial;
     text-decoration-style: initial;
     text-decoration-color: initial;
-  }
+  }*/
   ol{
     list-style-type: decimal;
     list-style-position: outside;
@@ -50,10 +50,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-/*a {
+a {
   color: inherit;
   text-decoration: none;
-}*/
+}
 
 * {
   box-sizing: border-box;

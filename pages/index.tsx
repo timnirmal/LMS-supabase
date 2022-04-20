@@ -20,8 +20,6 @@ const FORM_VALUES: SignUpFieldProps = {
     password: ''
 }
 
-
-
 const IndexPage: NextPage<NextAppPageProps> = ({}) => {
     const [posts, setPosts] = useState(null)
     const [count, setCount] = useState(0)
@@ -39,7 +37,7 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
                     setPosts(data);
                 }
                 else {
-                    console.log(error)
+                    console.log("Error", error)
                 }
             });
         console.log(posts);
@@ -48,7 +46,7 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
     //const posts = getAllPosts();
     console.log(posts);
     console.log("Post Got")
-    //console.log(posts);
+    console.log(posts);
     //const initialDisplayPosts = posts.slice(0, POSTS_PER_PAGE)
     const pagination = {
         currentPage: 1,
@@ -62,6 +60,17 @@ const IndexPage: NextPage<NextAppPageProps> = ({}) => {
             <Layout useBackdrop={true} usePadding={false}>
                 <section className="container mx-auto px-0 md:px-4 py-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-4">
+
+                        {posts && posts.map((post, index) => (
+                            <Card
+                                key={index}
+                                title={post.title}
+                                description={post.description}
+                                //image={post.image}
+                                image="/Products/WhiteClock.png"
+                                link={post.link}
+                            />
+                        ))}
 
                         <Card
                             //title={posts[0].title}

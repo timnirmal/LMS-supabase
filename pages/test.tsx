@@ -499,6 +499,14 @@ export default function Example() {
 
                                 <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                                     <div className="flow-root">
+                                        <a href="/dashboard" className="-m-2 p-2 block font-medium text-gray-900">
+                                            Dashboard
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div className="border-t border-gray-200 py-6 px-4 space-y-6">
+                                    <div className="flow-root">
                                         <a href="/blog" className="-m-2 p-2 block font-medium text-gray-900">
                                             Blog
                                         </a>
