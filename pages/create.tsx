@@ -83,8 +83,7 @@ const CodeWithCodemirror = dynamic(import("../components/Editor"), { ssr: false,
 
 
 export default function CreatePage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    console.log("CreatePage");
-
+    console.log("CreatePost");
 
     const {
         users,       // Logged in user object
@@ -108,7 +107,7 @@ export default function CreatePage({}: InferGetServerSidePropsType<typeof getSer
 
     return (
         <div>
-            <CodeWithCodemirror user={users}/>
+            hi
         </div>
     );
 }
@@ -120,7 +119,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}): Promise<Nex
     if (!user) {
         return {
             redirect: {
-                destination: '/auth?from=create',
+                destination: '/auth?from=createpost',
                 permanent: false,
             },
         }

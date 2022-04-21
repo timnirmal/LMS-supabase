@@ -145,7 +145,7 @@ export default function Example() {
 
 
     return (
-        <div className="bg-white">
+        <div className="bg-white w-full">
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setOpen}>
