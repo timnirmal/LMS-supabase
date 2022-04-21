@@ -114,6 +114,18 @@ const useHandleEditorInstanceLifecycle = ({
     const editorRef = useRef(editor);
     editorRef.current = editor;
 
+    //if fullscreen is active, we need to update the height of the editor
+    /*useEffect(() => {
+        if (editor) {
+            const { isFullscreenActive } = editor.codemirror;
+            if (isFullscreenActive) {
+                console.log("fullscreen is active");
+                const { height } = editor.codemirror.getWrapperElement().getBoundingClientRect();
+                editor.codemirror.setSize(null, height);
+            }
+        }
+    }, [editor]);*/
+
     useEffect(() => {
         let editor: SimpleMDE
         if (textRef) {
