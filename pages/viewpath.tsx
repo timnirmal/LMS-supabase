@@ -8,14 +8,18 @@ import {useEffect} from "react";
 import Router from "next/router";
 import {ROUTE_AUTH} from "../config";
 import {SpinnerFullPage} from "../components/Spinner";
+const CodeWithCodemirror = dynamic(import("../components/Editor"), { ssr: false, });
+import Component2 from "../components/Tree/Tree2";
 
-let CodeWithCodemirror: React.ComponentClass<{}> | React.FunctionComponent<{}>;
-CodeWithCodemirror = dynamic(import("../components/Editor"), {ssr: false,});
+import React, { Component } from 'react';
+import SortableTree from '@nosferatu500/react-sortable-tree';
+import '@nosferatu500/react-sortable-tree/style.css'; // This only needs to be imported once in your app
 
+import AddNodes from "../components/Tree/AddNodes";
 
-export default function CreatePost({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function ViewPath({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     console.log("CreatePost");
-
+    const treeData = [{"title":"Egg","expanded":true,"children":[{"title":"Chicken","children":[],"expanded":true}]},{"title":"Fish","children":[{"title":"fingerline","expanded":true}],"expanded":true}];
 
     const {
         users,       // Logged in user object
@@ -39,9 +43,25 @@ export default function CreatePost({}: InferGetServerSidePropsType<typeof getSer
 
     return (
         <div>
-            <CodeWithCodemirror user={users}/>
+            {// Map treeData to text nodes}
+                treeData.map((node, index) => {
+                    return (
+                        <div key={index} className="bg-red-600 p-2">
+                            {node.title}
+                            {node.children && node.children.map((child, index) => {
+                                return (
+                                    <div key={index} className="bg-blue-600 p-2">
+                                        {child.title}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )
+                })
+            }
         </div>
     );
+
 }
 
 // Fetch user data server-side to eliminate a flash of unauthenticated content.
@@ -51,7 +71,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}): Promise<Nex
     if (!user) {
         return {
             redirect: {
-                destination: '/auth?from=createpost',
+                destination: '/auth?from=viewpath',
                 permanent: false,
             },
         }
